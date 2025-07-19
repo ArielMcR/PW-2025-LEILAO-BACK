@@ -1,5 +1,6 @@
 package com.pw.leiloeiro.api.Domains.User;
 
+import com.pw.leiloeiro.api.Domains.Profile.Profile;
 import com.pw.leiloeiro.api.Domains.Standard.Standard;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
@@ -59,7 +62,7 @@ public class User extends Standard implements UserDetails {
     private String cellphone;
 
     @Column(name = "date_birth")
-    private String dateBirth;
+    private LocalDate dateBirth;
 
     @Column(name="gender")
     private String gender;
@@ -68,10 +71,20 @@ public class User extends Standard implements UserDetails {
     private LocalDate date_valide_code;
 
     @Column(name="validation_code_validity")
-    private String validation_code_validity;
+    private LocalDate validation_code_validity;
 
-    @Column(name="img_perfil")
-    private String imgPerfil;
+    @Lob
+    private byte[] imgPerfil;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tab_user_profile",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_profile")
+    )
+    private Set<Profile> perfis = new HashSet<>();
+
+
 
     public User(String name, String email, String password, UserRoles role, String fullName, String cellphone) {
         this.name = name;
