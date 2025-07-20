@@ -1,5 +1,6 @@
 package com.pw.leiloeiro.api.Domains.User;
 
+
 import com.pw.leiloeiro.api.Domains.Profile.Profile;
 import com.pw.leiloeiro.api.Domains.Standard.Standard;
 import jakarta.persistence.*;

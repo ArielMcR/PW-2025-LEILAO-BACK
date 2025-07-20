@@ -1,5 +1,6 @@
 package com.pw.leiloeiro.api.Services;
 
+import com.pw.leiloeiro.api.Domains.User.ChangePasswordDTO;
 import com.pw.leiloeiro.api.Domains.User.User;
 import com.pw.leiloeiro.api.Repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,5 +32,16 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByName(username);
+    }
+
+    @Transactional
+    public User updatePassword(String email, ChangePasswordDTO changePasswordDTO){
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.newPassword()));
+        return userRepository.save(user);
+        } else {
+            return null;
+        }
     }
 }

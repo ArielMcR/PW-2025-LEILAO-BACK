@@ -50,4 +50,20 @@ public class TokenService {
     private Instant genExpirationDate() {
         return LocalDateTime.now().plusHours(30).toInstant(ZoneOffset.of("-03:00"));
     }
+    private Instant genExpirationDateForReset() {
+        return LocalDateTime.now().plusHours(10).toInstant(ZoneOffset.of("-03:00"));
+    }
+
+    public String generateResetPasswordToken(String email) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.create()
+                    .withIssuer("API")
+                    .withSubject(email)
+                    .withExpiresAt(genExpirationDateForReset())
+                    .sign(algorithm);
+        } catch (JWTCreationException e) {
+            throw new RuntimeException("Erro na geração do token de redefinição", e);
+        }
+    }
 }
