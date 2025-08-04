@@ -33,10 +33,10 @@ public class SecurityConfigurations {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/vehicles/fetch", "/vehicles/fetch-by-filters", "/auth/register","/auth/login", "/forgot-password/**").permitAll()
+                        .requestMatchers("/vehicles/fetch", "/vehicles/fetch-by-filters", "/auth/register","/auth/login", "/forgot-password/**", "/category/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/user/edit").authenticated()
                         /*Admin Routes */
-                        .requestMatchers(HttpMethod.POST, "/vehicles/**").hasRole("ADMIN")
+                        .requestMatchers("/vehicles/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/vehicles/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

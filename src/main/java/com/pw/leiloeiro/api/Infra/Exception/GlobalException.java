@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import javax.naming.AuthenticationException;
@@ -24,6 +25,13 @@ public class GlobalException {
                 .body(new ResponseAnyDTO(422, "Requisição Inválida", message, Collections.emptyList()));
     }
 
+    @ExceptionHandler(NotFound.class)
+    public ResponseEntity<ResponseAnyDTO> naoEncontrado(NotFound ex, WebRequest request) {
+        ResponseAnyDTO respostaErro = new ResponseAnyDTO(HttpStatus.NOT_FOUND.value(), "Não Encontrado",
+                ex.getMessage()
+                , null);
+        return new ResponseEntity<>(respostaErro, HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ResponseAnyDTO> handleIllegalArgumentException(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
