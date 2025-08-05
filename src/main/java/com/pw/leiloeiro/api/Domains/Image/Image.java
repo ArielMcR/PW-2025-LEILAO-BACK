@@ -2,6 +2,7 @@ package com.pw.leiloeiro.api.Domains.Image;
 
 import com.pw.leiloeiro.api.Domains.Auction.Auction;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Image {
     private LocalDateTime dt_create = LocalDateTime.now();
 
     @Column(name = "name_image", nullable = false)
+    @NotNull(message = "o nome da imagem não pode ser nulo")
     private String name_image;
 
     @ManyToOne

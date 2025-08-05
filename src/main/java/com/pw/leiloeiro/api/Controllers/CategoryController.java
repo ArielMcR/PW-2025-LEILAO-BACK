@@ -3,6 +3,7 @@ package com.pw.leiloeiro.api.Controllers;
 import com.pw.leiloeiro.api.DTO.ResponseAnyDTO;
 import com.pw.leiloeiro.api.Domains.Category.Category;
 import com.pw.leiloeiro.api.Services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 @Controller
-@RequestMapping(value = "/category")
+@RequestMapping(value = "/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -21,7 +22,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseAnyDTO> create(@RequestBody Category category){
+    public ResponseEntity<ResponseAnyDTO> create(@Valid @RequestBody Category category){
         categoryService.save(category);
         return ResponseEntity.ok().body(new ResponseAnyDTO(200, "", "Categoria cadastrada com sucesso", Collections.emptyList()));
     }
