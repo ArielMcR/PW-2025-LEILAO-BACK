@@ -51,7 +51,7 @@ public class TokenService {
         return LocalDateTime.now().plusHours(30).toInstant(ZoneOffset.of("-03:00"));
     }
     private Instant genExpirationDateForReset() {
-        return LocalDateTime.now().plusHours(10).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusMinutes(10).toInstant(ZoneOffset.of("-03:00"));
     }
 
     public String generateResetPasswordToken(String email) {

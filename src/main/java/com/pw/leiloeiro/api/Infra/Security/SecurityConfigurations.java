@@ -33,11 +33,13 @@ public class SecurityConfigurations {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/vehicles/fetch", "/vehicles/fetch-by-filters", "/auth/register","/auth/login", "/forgot-password/**", "/categories/**", "/images/**", "/payments/**").permitAll()
+                        .requestMatchers("/vehicles/fetch", "/vehicles/fetch-by-filters", "/auth/register","/auth/login", "/forgot-password/**", "/images/**", "/payments/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/user/edit").authenticated()
                         /*Admin Routes */
                         .requestMatchers("/vehicles/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/vehicles/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/vehicles/**", "/categories/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 ).exceptionHandling(exceptionHandling -> exceptionHandling

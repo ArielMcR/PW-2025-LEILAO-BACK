@@ -27,7 +27,10 @@ public class CategoryController {
         return ResponseEntity.ok().body(new ResponseAnyDTO(200, "", "Categoria cadastrada com sucesso", Collections.emptyList()));
     }
     @GetMapping
-    public ResponseEntity<ResponseAnyDTO> searchAll(){
+    public ResponseEntity<ResponseAnyDTO> searchAll(@RequestParam(required = false) String name) {
+        if (name != null ) {
+            return ResponseEntity.ok().body(new ResponseAnyDTO(200, "", "", categoryService.searchByFilters(name)));
+        }
         return ResponseEntity.ok().body(new ResponseAnyDTO(200, "","", categoryService.search()));
     }
 

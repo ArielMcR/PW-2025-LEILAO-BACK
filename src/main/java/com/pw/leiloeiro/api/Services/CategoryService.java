@@ -46,4 +46,11 @@ public class CategoryService {
         Category categoriaBanco = buscarPorId(id);
         categoryRepository.delete(categoriaBanco);
     }
+
+    public List<Category> searchByFilters(String name) {
+          if (name != null) {
+            return categoryRepository.findByNameContaining(name);
+        }
+        return categoryRepository.findAll();
+    }
 }

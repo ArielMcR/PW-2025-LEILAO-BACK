@@ -1,5 +1,6 @@
 package com.pw.leiloeiro.api.Services;
 
+import com.pw.leiloeiro.api.DTO.UserSummaryDTO;
 import com.pw.leiloeiro.api.Domains.User.ChangePasswordDTO;
 import com.pw.leiloeiro.api.Domains.User.User;
 import com.pw.leiloeiro.api.Repositories.UserRepository;
@@ -12,6 +13,8 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -43,5 +46,10 @@ public class UserService implements UserDetailsService {
         } else {
             return null;
         }
+    }
+
+    @Transactional
+    public List<UserSummaryDTO> allUser(){
+        return userRepository.findUsers();
     }
 }
